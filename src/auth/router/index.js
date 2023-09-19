@@ -12,7 +12,10 @@ const {
   handleSecret,
   handleGetlist,
   handlePostlist,
+  handlePostProduct,
   handleUpdatelist,
+  handelDeleteProduct,
+  handleGetProduct
 } = require('../router/handlers.js');
 
 authRouter.post('/signup', handleSignup);
@@ -21,6 +24,11 @@ authRouter.get('/todo', handleGetlist);
 authRouter.post('/todo', handlePostlist);
 authRouter.put('/todo/:id', handleUpdatelist);
 authRouter.delete('/todo/:id', handelDelete);
+authRouter.post('/product', handlePostProduct);
+authRouter.delete('/product/:id', handelDeleteProduct);
+authRouter.get('/product', handleGetProduct);
+
+
 
 
 authRouter.get('/secret', bearerAuth, handleSecret);

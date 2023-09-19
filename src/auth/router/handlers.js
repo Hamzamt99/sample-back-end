@@ -1,6 +1,6 @@
 'use strict';
 
-const { users, todo } = require('../models/index.js');
+const { users, todo, product } = require('../models/index.js');
 
 async function handleSignup(req, res, next) {
   try {
@@ -82,6 +82,41 @@ async function handelDelete(req, res, next) {
   }
 }
 
+
+async function handlePostProduct(req, res, next) {
+  try {
+    const obj = req.body;
+    const data = await product.create(obj);
+    res.status(201).json({ data });
+  } catch (e) {
+    console.error(e);
+    next(e);
+  }
+}
+
+async function handelDeleteProduct(req, res, next) {
+  try {
+    const id = req.params.id;
+    const userRecords = await product.findOne({ where: { id } });
+    let updatedRecord = await product.destroy({ where: { id } })
+    res.status(204).json(userRecords);
+  } catch (e) {
+    console.error(e);
+    next(e);
+  }
+}
+
+async function handleGetProduct(req, res, next) {
+  try {
+    const userRecords = await product.findAll({});
+    res.status(200).json(userRecords);
+  } catch (e) {
+    console.error(e);
+    next(e);
+  }
+}
+
+
 function handleSecret(req, res, next) {
   res.status(200).send('Welcome to the secret area!');
 }
@@ -94,5 +129,8 @@ module.exports = {
   handleGetlist,
   handlePostlist,
   handleUpdatelist,
-  handelDelete
+  handelDelete,
+  handlePostProduct,
+  handelDeleteProduct,
+  handleGetProduct
 };

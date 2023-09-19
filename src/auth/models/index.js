@@ -3,7 +3,9 @@
 require('dotenv').config();
 const { Sequelize, DataTypes } = require('sequelize');
 const userSchema = require('./users.js');
-const Todo =require('./todo.js')
+const Todo = require('./todo.js')
+const products = require('./products.js')
+
 const DATABASE_URL = process.env.NODE_ENV === 'test' ? 'sqlite::memory' : process.env.DATABASE_URL;
 
 const DATABASE_CONFIG = process.env.NODE_ENV === 'production' ? {
@@ -20,5 +22,6 @@ const sequelize = new Sequelize(DATABASE_URL, DATABASE_CONFIG);
 module.exports = {
   db: sequelize,
   users: userSchema(sequelize, DataTypes),
-  todo:Todo(sequelize, DataTypes),
+  todo: Todo(sequelize, DataTypes),
+  product: products(sequelize, DataTypes)
 };
